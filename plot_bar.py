@@ -77,14 +77,16 @@ print str(len(pre_avg))+" "+str(len(pre_stdev))
 print index
 
 i=0;
-for key in pre:
+patterns = ('+','-', 'x','/','//','o','O','.','*','\\','\\\\')
+for key,pattern in zip(pre, patterns):
     print [0+i,10+i]
     rects1 = plt.bar([0+i,bar_width*(len(pre)+2)+i],[mean(pre[key]), mean(post[key])], bar_width,
                  alpha=opacity,
                  color=cm.jet(2.5*i/len(pre)),
                  yerr=[stdev(pre[key]), stdev(post[key])],
                  error_kw=error_config,
-                 label=key)
+                 label=key,
+				 hatch=pattern)
     i+=bar_width
 
 '''
@@ -94,7 +96,6 @@ rects1 = plt.bar([0,0.5,1,1.5,2.0,2.5,3,3.5], pre_avg, bar_width,
                  yerr=pre_stdev,
                  error_kw=error_config,
                  label='Pre-rebalance')
-
 rects2 = plt.bar(index+10, post_avg, bar_width,
                  alpha=opacity,
                  color='g',
@@ -113,16 +114,6 @@ plt.subplot(111).legend(loc='upper center', bbox_to_anchor=(0.5, 1.05),
 
 plt.tight_layout()
 plt.show()
-
-
-
-
-
-
-
-
-
-
 
 
 
