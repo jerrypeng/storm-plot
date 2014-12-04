@@ -17,8 +17,10 @@ for line in file.readlines():
 	component = args[4]
 	topology = args[5]
 	task_id = args[6]
+	if(int(throughput) < 0):
+		throughput = 0
 
-	element_id = hostname+":"+process+":"+component+":"+topology+":"+task_id
+	element_id = component+":"+topology+":"+task_id
 	#print "{"+element_id+"}-->["+time+", "+throughput+"]"
 	if ((element_id in throughput_dict) == False):
 		throughput_dict[element_id]=[]
@@ -33,7 +35,7 @@ for key in throughput_dict:
 	print str(time_dict[key])
 	print "\n"
 
-	task_id = key.split(":")[2]+"-"+key.split(":")[4]
+	task_id = key.split(":")[0]+"-"+key.split(":")[2]
 	line1=plt.plot(time_dict[key], throughput_dict[key], label=task_id)
 plt.xlabel("Time (s)")
 plt.ylabel("Throughput-Tuples/10sec")
